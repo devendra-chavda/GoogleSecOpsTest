@@ -32,13 +32,6 @@ class GoogleServiceAccountAuth:
 
         try:
             sa_dict = json.loads(service_account_json)
-
-            # Azure App Settings stores multiline values with literal \n (two chars)
-            # instead of actual newline characters. The RSA private key must have
-            # real newlines or google-auth will produce an invalid JWT signature.
-            if "private_key" in sa_dict:
-                sa_dict["private_key"] = sa_dict["private_key"].replace("\\n", "\n")
-
             applogger.debug(
                 consts.LOG_FORMAT.format(
                     consts.LOG_PREFIX,
